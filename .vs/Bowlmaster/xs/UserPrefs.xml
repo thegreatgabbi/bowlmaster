@@ -1,8 +1,9 @@
 ﻿<Properties StartupConfiguration="{FAC28C88-2AB9-0263-7861-91F44A0A8B29}|">
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ball.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CameraController.cs">
     <Files>
-      <File FileName="Assets/ball.cs" Line="7" Column="28" />
+      <File FileName="Assets/Ball.cs" Line="27" Column="18" />
+      <File FileName="Assets/CameraController.cs" Line="7" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
