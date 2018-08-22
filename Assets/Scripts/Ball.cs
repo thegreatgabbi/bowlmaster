@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour {
 
     private Rigidbody rigidbody;
     private AudioSource audioSource;
+    public bool inPlay = false;
 
 	// Use this for initialization
 	void Start ()
