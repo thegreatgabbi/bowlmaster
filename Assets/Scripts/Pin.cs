@@ -8,7 +8,6 @@ public class Pin : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        print(name + ": " + IsStanding());
 	}
 	
 	// Update is called once per frame
@@ -18,8 +17,6 @@ public class Pin : MonoBehaviour {
 
     public bool IsStanding()
     {
-        print(name + ": " + transform.rotation.eulerAngles);
-
         Vector3 rotationInEuler = transform.rotation.eulerAngles;
 
         float tiltInX = Mathf.Abs(rotationInEuler.x);
