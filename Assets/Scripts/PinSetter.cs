@@ -5,14 +5,18 @@ using UnityEngine.UI;
 
 public class PinSetter : MonoBehaviour {
 
-    Text standingPinsText;
-    int standingPins;
-    bool ballEnteredBox = false;
+    public int lastStandingCount = -1;
+    public Text standingPinsText;
+
+    private Ball ball;
+    private float lastChangeTime;
+    private bool ballEnteredBox = false;
 
 	// Use this for initialization
 	void Start ()
     {
         FindStandingPinsText();
+        ball = GameObject.FindObjectOfType<Ball>();
 	}
 
     private void FindStandingPinsText()
@@ -30,10 +34,32 @@ public class PinSetter : MonoBehaviour {
     // Update is called once per frame
 	void Update () {
         standingPinsText.text = CountStanding().ToString();
+        if (ballEnteredBox) {
+            CheckStanding();
+        }
 	}
 
+    void CheckStanding() {
+        // Update the lastStandingCount
+        if (lastStandingCount != CountStanding()) {
+            lastStandingCount = CountStanding();
+            lastChangeTime = Time.time;
+        } else if ((Time.time - lastChangeTime >= 3f)) {
+            PinsHaveSettled();
+        }
+        // Call PinsHaveSettled() when they have
+
+    }
+
+    void PinsHaveSettled() {
+        ball.Reset();
+        standingPinsText.color = Color.green;
+        ballEnteredBox = false;
+        lastStandingCount = -1; // Indicates pin have settled, and ball not back in box
+    }
+
     int CountStanding() {
-        standingPins = 0;
+        int standingPins = 0;
         foreach(Pin pin in FindObjectsOfType<Pin>()) {
             if (pin.IsStanding()) {
                 standingPins++;
