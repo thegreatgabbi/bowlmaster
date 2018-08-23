@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Ball))]
-public class DragLaunch : MonoBehaviour
+public class BallDragLaunch : MonoBehaviour
 {
 
     private Ball ball;
@@ -15,12 +15,6 @@ public class DragLaunch : MonoBehaviour
     void Start()
     {
         ball = GetComponent<Ball>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void DragStart()
