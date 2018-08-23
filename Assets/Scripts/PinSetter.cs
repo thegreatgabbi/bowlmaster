@@ -7,6 +7,7 @@ public class PinSetter : MonoBehaviour {
 
     public int lastStandingCount = -1;
     public Text standingPinsText;
+    public float distToRaise = 40f;
 
     private Ball ball;
     private float lastChangeTime;
@@ -83,5 +84,24 @@ public class PinSetter : MonoBehaviour {
         if (thingLeft.GetComponent<Pin>()) {
             Destroy(thingLeft);
         }
+	}
+
+    public void RaisePins() {
+        foreach (Pin pin in FindObjectsOfType<Pin>())
+        {
+            pin.RaiseIfStanding();
+        }
+    }
+
+    public void LowerPins() {
+        foreach (Pin pin in FindObjectsOfType<Pin>())
+        {
+            pin.Lower();
+        }
+    }
+
+	public void RenewPins()
+	{
+        Debug.Log("Renew Pins");
 	}
 }

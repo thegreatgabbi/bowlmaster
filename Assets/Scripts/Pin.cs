@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pin : MonoBehaviour {
 
     public float standingThreshold = 3f;
+    public float distToRaise = 40f;
 
 	// Use this for initialization
 	void Start () {
@@ -31,5 +32,17 @@ public class Pin : MonoBehaviour {
             return false;
         }
 
+    }
+
+    public void RaiseIfStanding() {
+        if (IsStanding())
+        {
+            transform.Translate(new Vector3(0, distToRaise, 0), Space.World);
+            GetComponent<Rigidbody>().useGravity = false;
+        }
+    }
+
+    public void Lower() {
+        transform.Translate(new Vector3(0, -distToRaise, 0), Space.World);
     }
 }
