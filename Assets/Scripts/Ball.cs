@@ -22,6 +22,7 @@ public class Ball : MonoBehaviour {
 
     public void Launch(Vector3 launchVelocity)
     {
+        inPlay = true;
         myRigidbody.velocity = launchVelocity;
         myRigidbody.useGravity = true;
         audioSource.Play();
@@ -31,9 +32,11 @@ public class Ball : MonoBehaviour {
 	{
         Debug.Log("Resetting ball");
         transform.position = initialPos;
+        transform.rotation = Quaternion.identity; // to reset the ball's rotation
         myRigidbody.velocity = new Vector3 (0, 0, 0);
         myRigidbody.angularVelocity = new Vector3(0, 0, 0);
         myRigidbody.useGravity = false;
+        inPlay = false;
 	}
 
 
