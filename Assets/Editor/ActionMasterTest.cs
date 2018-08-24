@@ -94,4 +94,22 @@ public class ActionMasterTest
         Assert.AreEqual(tidy, actionMaster.Bowl(5)); // Bowl 20
     }
 
+    [Test]
+    public void T09NathanRobbertBugTest () {
+        actionMaster.Bowl(0);
+        actionMaster.Bowl(10);
+        Assert.AreEqual(3, actionMaster.bowl);
+    }
+
+    [Test]
+    public void T10Dondi10thFrameTurkey() {
+        for (int i = 1; i <= 18; i++) // bowl 18 times
+        {
+            actionMaster.Bowl(1);
+        }
+        Assert.AreEqual(reset, actionMaster.Bowl(10));
+        Assert.AreEqual(reset, actionMaster.Bowl(10));
+        Assert.AreEqual(endGame, actionMaster.Bowl(10));
+    }
+
 }

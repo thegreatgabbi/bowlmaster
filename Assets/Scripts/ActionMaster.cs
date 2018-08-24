@@ -8,7 +8,7 @@ public class ActionMaster {
     // EndTurn will change the player's turn (and presumably Reset as well)
     public enum Action {Tidy, Reset, EndTurn, EndGame}
 
-    private int bowl = 1;
+    public int bowl = 1;
     private int[] bowls = new int[21];
 
     public Action Bowl(int pins) {
@@ -25,12 +25,13 @@ public class ActionMaster {
         }
 
         // handle last frame special cases
-        if (bowl == 19 && pins == 10) {
+        if (bowl >= 19 && pins == 10) {
             bowl += 1;
             return Action.Reset;
         } else if (bowl == 20) {
             bowl += 1;
-            if (AllPinsAreKnockedDown()) {
+            if (AllPinsAreKnockedDown())
+            {
                 return Action.Reset;
             } else if (Bowl21Awarded()) {
                 return Action.Tidy;
