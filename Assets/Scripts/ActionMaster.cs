@@ -6,6 +6,8 @@ public class ActionMaster {
 
     public enum Action {Tidy, Reset, EndTurn, EndGame}
 
+    private int bowl = 1;
+
     public Action Bowl(int pins) {
 
         if (pins < 0 || pins > 10) {
@@ -13,7 +15,18 @@ public class ActionMaster {
         }
 
         if (pins == 10) {
+            bowl += 2;
 			return Action.EndTurn;
+        }
+
+        // if first bowl of frame
+        // return Action.Tidy
+        if (bowl % 2 != 0) {
+            bowl += 1;
+            return Action.Tidy;
+        } else if (bowl % 2 == 0){
+            bowl += 1;
+            return Action.EndTurn;
         }
 
         // other actions here
