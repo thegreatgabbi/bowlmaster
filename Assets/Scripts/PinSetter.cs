@@ -94,6 +94,6 @@ public class PinSetter : MonoBehaviour {
 
 	public void RenewPins()
 	{
-        GameObject pins = Instantiate(pinSet, new Vector3(0, 0, 0), Quaternion.identity);
+        Instantiate(pinSet, new Vector3(0, 0, 0), Quaternion.identity);
 	}
 }

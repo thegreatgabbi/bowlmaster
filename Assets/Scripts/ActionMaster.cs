@@ -24,25 +24,31 @@ public class ActionMaster {
             return Action.EndGame;
         }
 
-        if (bowl >= 19 && Bowl21Awarded()) {
+        // handle last frame special cases
+        if (bowl == 19 && pins == 10) {
             bowl += 1;
             return Action.Reset;
-        }
-
-        if (bowl == 20 && !Bowl21Awarded()) {
-            return Action.EndGame;
-        }
-
-        if (pins == 10) {
-            bowl += 2;
-			return Action.EndTurn;
+        } else if (bowl == 20) {
+            bowl += 1;
+            if (AllPinsAreKnockedDown()) {
+                return Action.Reset;
+            } else if (Bowl21Awarded()) {
+                return Action.Tidy;
+            } else {
+                return Action.EndGame;
+            }
         }
 
         // if first bowl of frame
         // return Action.Tidy
         if (bowl % 2 != 0) {
-            bowl += 1;
-            return Action.Tidy;
+            if (pins == 10) {
+                bowl += 2;
+                return Action.EndTurn;
+            } else {
+                bowl += 1;
+                return Action.Tidy;
+            }
         } else if (bowl % 2 == 0){
             bowl += 1;
             return Action.EndTurn;
@@ -51,6 +57,10 @@ public class ActionMaster {
         // other actions here
 
         throw new UnityException("Not sure what action to return");
+    }
+
+    private bool AllPinsAreKnockedDown() {
+        return (bowls[19 - 1] + bowls[20 - 1] == 10);
     }
 
     private bool Bowl21Awarded() {

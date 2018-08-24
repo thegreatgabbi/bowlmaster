@@ -84,4 +84,14 @@ public class ActionMasterTest
         Assert.AreEqual(endGame, actionMaster.Bowl(10)); // bowl 21
     }
 
+    [Test]
+    public void T08CheckTidyNonStrikeAfterStrikeAtBowl20() {
+        for (int i = 1; i <= 18; i++) // bowl 18 times
+        {
+            actionMaster.Bowl(1);
+        }
+        actionMaster.Bowl(10);
+        Assert.AreEqual(tidy, actionMaster.Bowl(5)); // Bowl 20
+    }
+
 }
