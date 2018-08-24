@@ -30,7 +30,6 @@ public class Ball : MonoBehaviour {
 
 	public void Reset()
 	{
-        Debug.Log("Resetting ball");
         transform.position = initialPos;
         transform.rotation = Quaternion.identity; // to reset the ball's rotation
         myRigidbody.velocity = new Vector3 (0, 0, 0);

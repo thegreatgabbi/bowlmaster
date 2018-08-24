@@ -14,12 +14,5 @@ public class LaneBox : MonoBehaviour {
         standingPinsText = GameObject.Find("StandingPinsText").GetComponent<Text>();
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<Ball>()) {
-            pinSetter.SetBallOutPlay();
-            standingPinsText.color = Color.red;
-        }
-        Debug.Log("Ball left box");
-    }
+
 }
