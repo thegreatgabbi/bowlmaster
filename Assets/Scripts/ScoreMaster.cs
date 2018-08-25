@@ -9,8 +9,11 @@ public class ScoreMaster {
         List<int> frameList = new List<int>();
 
         for (int i = 1; i <= rolls.Count; i++) {
-            if (i != 1 && i % 2 == 0) {
-                frameList.Add(rolls[i-1] + rolls[i-2]);
+            if (i != 1 && i % 2 == 0) { // even bowls: e.g. 2, 4, 6
+                if (rolls[i-1-1] != 10) { // i-1-1: get correct index, then go back one
+                    Debug.Log("Reached");
+                    frameList.Add(rolls[i - 1] + rolls[i - 2]);
+                }
             }
         }
 
