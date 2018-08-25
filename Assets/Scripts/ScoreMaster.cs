@@ -1,28 +1,39 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ScoreMaster {
 
     // Return a list of individual frame scores, NOT cumulative
-    public static List<int> ScoreFrames(List<int> rolls) {
+    public static List<int> ScoreFrames(List<int> rolls)
+    {
         List<int> frameList = new List<int>();
+        int intermediateValue = -1;
 
-        for (int i = 1; i <= rolls.Count; i++) {
-            if (i != 1 && i % 2 == 0) { // if end of frame (i.e. even bowls)
-                // if strike on previous bowl
-                if (rolls[i-1-1] == 10) { // i-1-1: get correct index, then go back one
-                    continue;
-                }
-                // if spare
-                else if (rolls[i-1-1] + rolls[i-1] == 10) {
-                    continue;
+        for (int i = 1; i <= rolls.Count; i++)
+        {
+            if (rolls[i - 1] == 10) // strike
+            {
+                intermediateValue = -1;
+            }
+            else if (intermediateValue == 10) { // mid-frame
+                frameList.Add(rolls[i - 1] + intermediateValue);
+                intermediateValue = rolls[i - 1];
+            }
+            else if (intermediateValue == -1) // mid-frame
+            {
+                intermediateValue = rolls[i - 1];
+            } else { // end-frame
+                if (rolls[i - 1] + intermediateValue == 10) {
+                    // spare condition
+                    intermediateValue = 10;
                 } else {
-                    frameList.Add(rolls[i - 1] + rolls[i - 2]);
+                    frameList.Add(rolls[i - 1] + intermediateValue);
+                    intermediateValue = -1;
                 }
             }
         }
-
         return frameList;
     }
 
