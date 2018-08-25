@@ -23,10 +23,15 @@ public class ScoreMaster {
             }
             else if (prevAction == Action.STRIKE2)
             {
-                frameList.Add(rolls[i - 1] + rolls[i - 2] + rolls[i - 3]); // prev frame score
-                frameList.Add(rolls[i - 1] + rolls[i - 2]); // current frame score
-                intermediateValue = 0;
-                prevAction = Action.NEWFRAME;
+                frameList.Add(rolls[i - 1] + rolls[i - 2] + rolls[i - 3]); // print prev frame score
+                // if your previous action was also a strike, you should delay evalation of current frame
+                if (rolls[i-2] == 10) {
+                    prevAction = Action.STRIKE2;
+                } else {
+                    frameList.Add(rolls[i - 1] + rolls[i - 2]); // current frame score
+                    intermediateValue = 0;
+                    prevAction = Action.NEWFRAME;
+                }
             }
             else if (prevAction == Action.SPARE)
             {
