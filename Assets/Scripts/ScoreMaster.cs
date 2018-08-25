@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ScoreMaster {
 
@@ -18,13 +19,12 @@ public class ScoreMaster {
         {
             if (prevAction == Action.STRIKE1)
             {
-                intermediateValue = rolls[i - 1];
                 prevAction = Action.STRIKE2;
             }
             else if (prevAction == Action.STRIKE2)
             {
-                frameList.Add(rolls[i - 1] + intermediateValue + 10); // prev frame score
-                frameList.Add(rolls[i - 1] + intermediateValue); // current frame score
+                frameList.Add(rolls[i - 1] + rolls[i - 2] + rolls[i - 3]); // prev frame score
+                frameList.Add(rolls[i - 1] + rolls[i - 2]); // current frame score
                 intermediateValue = 0;
                 prevAction = Action.NEWFRAME;
             }
@@ -59,6 +59,8 @@ public class ScoreMaster {
                     prevAction = Action.NEWFRAME;
                 }
             }
+            var result = String.Join(",", frameList.Select(x => x.ToString()).ToArray());
+            Debug.Log(String.Format("Bowl {0}: {1}", i, result));
         }
         return frameList;
     }
