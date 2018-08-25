@@ -5,32 +5,58 @@ using UnityEngine;
 
 public class ScoreMaster {
 
+    public enum Action {NEWFRAME, MIDFRAME, STRIKE1, STRIKE2, SPARE}
+
     // Return a list of individual frame scores, NOT cumulative
     public static List<int> ScoreFrames(List<int> rolls)
     {
         List<int> frameList = new List<int>();
-        int intermediateValue = -1;
+        Action prevAction = Action.NEWFRAME;
+        int intermediateValue = 0;
 
         for (int i = 1; i <= rolls.Count; i++)
         {
-            if (rolls[i - 1] == 10) // strike
-            {
-                intermediateValue = -1;
-            }
-            else if (intermediateValue == 10) { // mid-frame
-                frameList.Add(rolls[i - 1] + intermediateValue);
-                intermediateValue = rolls[i - 1];
-            }
-            else if (intermediateValue == -1) // mid-frame
+            if (prevAction == Action.STRIKE1)
             {
                 intermediateValue = rolls[i - 1];
-            } else { // end-frame
-                if (rolls[i - 1] + intermediateValue == 10) {
-                    // spare condition
-                    intermediateValue = 10;
-                } else {
+                prevAction = Action.STRIKE2;
+            }
+            else if (prevAction == Action.STRIKE2)
+            {
+                frameList.Add(rolls[i - 1] + intermediateValue + 10); // prev frame score
+                frameList.Add(rolls[i - 1] + intermediateValue); // current frame score
+                intermediateValue = 0;
+                prevAction = Action.NEWFRAME;
+            }
+            else if (prevAction == Action.SPARE)
+            {
+                frameList.Add(rolls[i - 1] + 10);
+                intermediateValue = rolls[i - 1];
+                prevAction = Action.MIDFRAME;
+            }
+            else if (prevAction == Action.NEWFRAME)
+            {
+                if (rolls[i - 1] == 10)
+                { // got strike
+                    intermediateValue = 0;
+                    prevAction = Action.STRIKE1;
+                }
+                else
+                {
+                    intermediateValue = rolls[i - 1];
+                    prevAction = Action.MIDFRAME;
+                }
+            } else {
+                if (rolls[i - 1] + intermediateValue == 10)
+                { // got spare
+                    intermediateValue = 0;
+                    prevAction = Action.SPARE;
+                }
+                else
+                {
                     frameList.Add(rolls[i - 1] + intermediateValue);
-                    intermediateValue = -1;
+                    intermediateValue = 0;
+                    prevAction = Action.NEWFRAME;
                 }
             }
         }
@@ -47,5 +73,4 @@ public class ScoreMaster {
         }
         return scoreList;
     }
-                         
 }
