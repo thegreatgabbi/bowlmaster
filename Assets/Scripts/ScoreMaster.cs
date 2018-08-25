@@ -15,38 +15,58 @@ public class ScoreMaster
         List<int> frameList = new List<int>();
         Action prevAction = Action.NEWFRAME;
         int intermediateValue = 0;
+        int frame = 0;
 
         for (int i = 1; i <= rolls.Count; i++)
         {
             if (prevAction == Action.STRIKE1)
             {
+                if (frame != 10) {
+                    frame++;
+                }
+
                 prevAction = Action.STRIKE2;
             }
             else if (prevAction == Action.STRIKE2)
             {
+                if (frame != 10 && rolls[i-2] == 10) // if previous roll was a strike
+                {
+                    frame++;
+                }
+
                 frameList.Add(rolls[i - 1] + rolls[i - 2] + rolls[i - 3]); // print prev frame score
                 // if your previous action was also a strike, you should delay evalation of current frame
                 if (rolls[i - 2] == 10)
                 {
                     prevAction = Action.STRIKE2;
                 }
-                else if (i == 21)
-                {
-                    prevAction = Action.ENDGAME;
+                else if (rolls[i - 1] + rolls[i-2] == 10) {
+                    prevAction = Action.SPARE;
                 } else {
-                    frameList.Add(rolls[i - 1] + rolls[i - 2]); // current frame score
+                    if (frame != 10)
+                    {
+                        frameList.Add(rolls[i - 1] + rolls[i - 2]); // current frame score
+                    }
                     intermediateValue = 0;
                     prevAction = Action.NEWFRAME;
                 }
             }
             else if (prevAction == Action.SPARE)
             {
+                if (frame != 10)
+                {
+                    frame++;
+                }
                 frameList.Add(rolls[i - 1] + 10);
                 intermediateValue = rolls[i - 1];
                 prevAction = Action.MIDFRAME;
             }
             else if (prevAction == Action.NEWFRAME)
             {
+                if (frame != 10)
+                {
+                    frame++;
+                }
                 if (rolls[i - 1] == 10)
                 { // got strike
                     intermediateValue = 0;
@@ -73,7 +93,7 @@ public class ScoreMaster
                 }
             }
             //var result = String.Join(",", frameList.Select(x => x.ToString()).ToArray());
-            //Debug.Log(String.Format("Bowl {0}: {1}", i, result));
+            //Debug.Log(String.Format("Frame {0}: {1}", frame, result));
         }
         return frameList;
     }
