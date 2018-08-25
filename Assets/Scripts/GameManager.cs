@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
         Debug.Log(string.Join(",", pinArr.Select(x => x.ToString()).ToArray()));
 
         // Call ScoreMaster to get scores
-        List<int> scores = scoreMaster.ScoreFrames(pins);
+        List<int> scores = ScoreMaster.ScoreFrames(pins);
 
         // Call ActionMaster
         ActionMaster.Action action = ActionMaster.NextAction(pins);

@@ -1,9 +1,10 @@
 ﻿<Properties StartupConfiguration="{FAC28C88-2AB9-0263-7861-91F44A0A8B29}|">
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PinSetter.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ActionMaster.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameManager.cs" Line="42" Column="9" />
-      <File FileName="Assets/Scripts/PinSetter.cs" Line="12" Column="22" />
+      <File FileName="Assets/Editor/ScoreMasterTest.cs" Line="21" Column="3" />
+      <File FileName="Assets/Scripts/ScoreMaster.cs" Line="12" Column="23" NotebookId="1" />
+      <File FileName="Assets/Scripts/ActionMaster.cs" Line="45" Column="9" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
