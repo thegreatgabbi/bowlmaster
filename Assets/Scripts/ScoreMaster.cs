@@ -9,9 +9,15 @@ public class ScoreMaster {
         List<int> frameList = new List<int>();
 
         for (int i = 1; i <= rolls.Count; i++) {
-            if (i != 1 && i % 2 == 0) { // even bowls: e.g. 2, 4, 6
-                if (rolls[i-1-1] != 10) { // i-1-1: get correct index, then go back one
-                    Debug.Log("Reached");
+            if (i != 1 && i % 2 == 0) { // if end of frame (i.e. even bowls)
+                // if strike on previous bowl
+                if (rolls[i-1-1] == 10) { // i-1-1: get correct index, then go back one
+                    continue;
+                }
+                // if spare
+                else if (rolls[i-1-1] + rolls[i-1] == 10) {
+                    continue;
+                } else {
                     frameList.Add(rolls[i - 1] + rolls[i - 2]);
                 }
             }
@@ -30,4 +36,5 @@ public class ScoreMaster {
         }
         return scoreList;
     }
+                         
 }
