@@ -7,7 +7,7 @@ using System.Linq;
 public class ScoreMaster
 {
 
-    public enum Action { NEWFRAME, MIDFRAME, STRIKE1, STRIKE2, SPARE, ENDGAME }
+    public enum Action { NEWFRAME, MIDFRAME, STRIKE1, STRIKE2, SPARE }
 
     // Return a list of individual frame scores, NOT cumulative
     public static List<int> ScoreFrames(List<int> rolls)
@@ -19,10 +19,56 @@ public class ScoreMaster
 
         for (int i = 1; i <= rolls.Count; i++)
         {
-            if (prevAction == Action.STRIKE1)
+            if (prevAction == Action.NEWFRAME)
             {
-                if (frame != 10) {
-                    frame++;
+                if (frame != 10) frame++;
+
+                if (rolls[i - 1] == 10)
+                { // got strike
+                    intermediateValue = 0;
+                    prevAction = Action.STRIKE1;
+                }
+                else
+                {
+                    intermediateValue = rolls[i - 1];
+                    prevAction = Action.MIDFRAME;
+                }
+            }
+            else if (prevAction == Action.MIDFRAME)
+            {
+                if (rolls[i - 1] + intermediateValue == 10)
+                { // got spare
+                    intermediateValue = 0;
+                    prevAction = Action.SPARE;
+                }
+                else
+                {
+                    frameList.Add(rolls[i - 1] + intermediateValue);
+                    intermediateValue = 0;
+                    prevAction = Action.NEWFRAME;
+                }
+            }
+            else if (prevAction == Action.SPARE)
+            {
+                if (frame != 10) frame++;
+
+                if (rolls[i-1] == 10) {
+                    intermediateValue = 10;
+                    prevAction = Action.STRIKE1;
+                } else {
+                    frameList.Add(rolls[i - 1] + 10);
+                    intermediateValue = rolls[i - 1];
+                    prevAction = Action.MIDFRAME;
+                }
+
+            }
+            else if (prevAction == Action.STRIKE1)
+            {
+                if (frame != 10) frame++;
+
+                // if previous frame was spare
+                if (intermediateValue == 10) {
+                    frameList.Add(rolls[i - 1] + intermediateValue);
                 }
 
                 prevAction = Action.STRIKE2;
@@ -51,49 +97,9 @@ public class ScoreMaster
                     prevAction = Action.NEWFRAME;
                 }
             }
-            else if (prevAction == Action.SPARE)
-            {
-                if (frame != 10)
-                {
-                    frame++;
-                }
-                frameList.Add(rolls[i - 1] + 10);
-                intermediateValue = rolls[i - 1];
-                prevAction = Action.MIDFRAME;
-            }
-            else if (prevAction == Action.NEWFRAME)
-            {
-                if (frame != 10)
-                {
-                    frame++;
-                }
-                if (rolls[i - 1] == 10)
-                { // got strike
-                    intermediateValue = 0;
-                    prevAction = Action.STRIKE1;
-                }
-                else
-                {
-                    intermediateValue = rolls[i - 1];
-                    prevAction = Action.MIDFRAME;
-                }
-            }
-            else if (prevAction == Action.MIDFRAME)
-            {
-                if (rolls[i - 1] + intermediateValue == 10)
-                { // got spare
-                    intermediateValue = 0;
-                    prevAction = Action.SPARE;
-                }
-                else
-                {
-                    frameList.Add(rolls[i - 1] + intermediateValue);
-                    intermediateValue = 0;
-                    prevAction = Action.NEWFRAME;
-                }
-            }
-            //var result = String.Join(",", frameList.Select(x => x.ToString()).ToArray());
-            //Debug.Log(String.Format("Frame {0}: {1}", frame, result));
+
+            var result = String.Join(",", frameList.Select(x => x.ToString()).ToArray());
+            Console.WriteLine(String.Format("Frame {0}: {1}", frame, result));
         }
         return frameList;
     }
@@ -112,7 +118,7 @@ public class ScoreMaster
             scoreList.Add(score);
 
             var result = String.Join(",", scoreList.Select(x => x.ToString()).ToArray());
-            Debug.Log(result);
+            Console.WriteLine(result);
         }
         return scoreList;
     }
