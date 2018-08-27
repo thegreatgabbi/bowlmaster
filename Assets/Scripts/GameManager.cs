@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour {
 
     public static List<int> pins = new List<int>();
 
-    private ScoreMaster scoreMaster = new ScoreMaster();
     private ActionMaster actionMaster = new ActionMaster();
     private Animator animator;
     private Ball ball;
